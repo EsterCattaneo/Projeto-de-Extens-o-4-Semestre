@@ -1,0 +1,33 @@
+#pedido {
+    margin-top: 20px;
+}
+
+#itens-selecionados {
+    list-style-type: none;
+    padding: 0;
+}
+
+.btn-add {
+    cursor: pointer;
+    color: blue;
+}
+
+#aumentar,
+#diminuir{
+    color: #0b0a0a;
+    background: #F39562;
+    padding: 5px 12px;
+    text-decoration: none;
+    text-transform: uppercase;
+    border: none;
+    text-align: center;
+}
+
+.comprovante{
+    display: initial;
+}
+
+.comprovante button{
+    border: 0px;
+    font-family: 'Oswald', sans-serif;
+}
