@@ -73,24 +73,3 @@ h4 {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     font-weight: normal;
 }
-
-.btn1{
-    color:#0b0a0a;
-    background:#F39562;
-    padding:5px 10px;
-    font-size:12px;
-    text-transform:uppercase;
-  }
-  
-  .btn1:hover{
-    border:none;
-    background:#ffece2;
-    padding:5px 10px;
-    color:#0b0a0a;
-  }
-  
-  .btn-span{
-    padding: 0px 15px;
-    margin: 0px 10px;
-    background: white;
-  }

@@ -3,8 +3,8 @@ const mysql = require('mysql2');
 const host = 'localhost';
 const database = 'doceviver';
 const user = 'root';
-const password = '67670104ambe@';
-const port = 3306;
+const password = '';
+const port = 3307;
 
 //Aqui está sendo exportada uma função que precisa ser executada por quem 
 // a chama para que a conexão seja feita.

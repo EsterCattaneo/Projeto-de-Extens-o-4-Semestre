@@ -1,13 +1,13 @@
-module.exports = {  //usando o module exports para tornar acessivel em outros arquivos o modulo, e exportando o bojeto que contem todas as funções
-    consultarComentario: (dbConnection, callback) => { //buscaando os comentarios
+module.exports = {    
+    consultarComentario: (dbConnection, callback) => {
         //console.log('Model da home');
-        const sql = 'SELECT cardapio_id, comentario FROM galeria'; //busca todos os regisros da tabela comentario e cardapio id
-        dbConnection.query(sql, callback); //fazendo uma conexao direta com o banco, o callbakc é usado para manipular os resultados e tratar os erros
+        const sql = 'SELECT cardapio_id, comentario FROM galeria';
+        dbConnection.query(sql, callback);
     },
 
     adicionarComentario: (app, req, res) => {
         // Pegar os dados enviados pelo formulário
-        const cliente_id = req.query.cliente_id; // ID do cliente enviado pela URL
+        const cliente_id = req.query.cliente_id; // ID da obra enviado pela URL
         const cardapio_id = req.query.cardapio_id; // ID da obra enviado pela URL
         const comentario = req.body.comentario; // Comentário enviado pelo formulário
     
@@ -32,7 +32,7 @@ module.exports = {  //usando o module exports para tornar acessivel em outros ar
 
     consultarCurtidas: (dbConnection, callback) => {
         //console.log('Model da home');
-        const sql = 'SELECT * FROM curtida'; //consulta todos as colunas da tabela curtida
+        const sql = 'SELECT * FROM curtida';
         dbConnection.query(sql, callback);
     },
 
@@ -42,7 +42,7 @@ module.exports = {  //usando o module exports para tornar acessivel em outros ar
         // Conexão com o banco de dados
         const dbConnection = require('../../config/dbConnection')();
     
-        // aqui eu to obtendo o número atual de curtidas para incrementar
+        // Primeiro, obtemos o número atual de curtidas para incrementar
         const getCurrentLikesSql = 'SELECT curtidas FROM curtida WHERE cardapio_id = ?';
         dbConnection.query(getCurrentLikesSql, [cardapio_id], (err, results) => {
             if (err) {

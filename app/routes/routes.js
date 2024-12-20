@@ -1,21 +1,28 @@
 const { home } = require('../controllers/home');
 const { cardapio } = require('../controllers/cardapio');
 const { sobreNos } = require('../controllers/sobreNos');
-const { galeria } = require('../controllers/galeria');
 const { ifsp } = require('../controllers/ifsp');
-const { teste } = require('../controllers/teste');
-const { faleConosco, enviarMensagem } = require('../controllers/faleConosco');
-const { fazerPedido, fecharPedido } = require('../controllers/fazerPedido');
+
+const { galeria } = require('../controllers/galeria');
 const { adicionarComentario } = require('../models/galeria');
 const { incrementoCurtida } = require('../models/galeria');
+const { fazerPedido, fecharPedido } = require('../controllers/fazerPedido'); // Incluído o controller de fecharPedido
+const { faleConosco, enviarMensagem } = require('../controllers/faleConosco');
+const { editarCardapio, adicionarPedido, editarPedido, excluirPedido } = require('../controllers/editarCardapio');
+
+const { login, autenticarUsuario } = require('../controllers/login');
+const { admin, autenticarAdministrador } = require('../controllers/admin');
+const { cadastro, salvarUsuario } = require('../controllers/cadastro');
 
 module.exports = {
+
   // Rota da página Home
   home: (app) => {
     app.get('/', function (req, res) {
-      home(app, req, res); // Controlador da home
+      home(app, req, res); // Controller da home
     });
   },
+
   // Rota do cardápio
   cardapio: (app) => {
     app.get('/cardapio', function (req, res) {
@@ -27,6 +34,13 @@ module.exports = {
   sobreNos: (app) => {
     app.get('/sobreNos', function (req, res) {
       sobreNos(app, req, res); // Página sobre a empresa
+    });
+  },
+
+  // Rota sobre o IFSP
+  ifsp: (app) => {
+    app.get('/ifsp', function (req, res) {
+      ifsp(app, req, res); // Página sobre o IFSP
     });
   },
 
@@ -44,13 +58,6 @@ module.exports = {
     // Incrementa a curtida na galeria
     app.post('/galeria/incremento', function (req, res) {
       incrementoCurtida(app, req, res);
-    });
-  },
-
-  // Rota sobre o IFSP
-  ifsp: (app) => {
-    app.get('/ifsp', function (req, res) {
-      ifsp(app, req, res); // Página sobre o IFSP
     });
   },
 
@@ -72,22 +79,88 @@ module.exports = {
   faleConosco: (app) => {
     // Exibe o formulário de "Fale Conosco"
     app.get('/faleConosco', (req, res) => {
-      faleConosco(req, res); // Controller que renderiza o formulário
+      faleConosco(req, res);
     });
   
     // Processa o envio do formulário
-    app.post('/faleConosco', enviarMensagem); // Chama a função de enviar a mensagem diretamente
+    app.post('/faleConosco', (req, res) => {
+      enviarMensagem(req, res);
+    });
+  },
+
+  // Rota para o Fale Conosco
+  editarCardapio: (app) => {
+    // Exibe o formulário de "Fale Conosco"
+    app.get('/editarCardapio', (req, res) => {
+      editarCardapio(req, res);
+    });
+
+    app.post('/editarCardapio/adicionar', (req, res) => {
+      adicionarPedido(req, res);
+    });
+
+    app.post('/editarCardapio/:id', (req, res) => {
+      if(req.session.user){
+        if(req.session.user.admin == 1){
+          editarPedido(req, res);
+        }
+      }
+    });
+
+    app.post('/excluirCardapio/:id', (req, res) => {
+      if(req.session.user){
+        if(req.session.user.admin == 1){
+          excluirPedido(req, res);
+        }
+      }
+    });
+  },
+
+  // Rota para o Login
+  login: (app) => {
+    app.get('/login', function(req, res) {
+      login(app, req, res);
+    });
+
+    app.post('/autenticar', (req, res) => {
+      autenticarUsuario(req, res);
+    });
+  },
+
+  // Rota para o Login
+  admin: (app) => {
+    app.get('/admin', function(req, res) {
+      admin(app, req, res);
+    });
+
+    app.post('/autenticar', (req, res) => {
+      autenticarAdministrador(req, res);
+    });
+  },
+  
+  // Rota para o Cadastro
+  cadastro: (app) => {
+    app.get('/cadastro', function(req, res) {
+      cadastro(app, req, res);
+    });
+
+    app.post('/cadastroSucesso', (req, res) => {
+      salvarUsuario(req, res);
+    });
+  },
+
+  sair: (app) => {
+    app.get('/sair', function (req, res) {
+      req.session.user = null;
+      console.log(req.session.user);
+      res.redirect('/?message=logout_sucesso');
+    });
   },
 
   // Rota para quando a URL não for encontrada
   routeNotFound: (app) => {
     app.get('*', function (req, res) {
-      res.render('routeNotFound.ejs'); // Página de erro para rota não encontrada
-});
-  },
-  teste: (app) => {
-    app.get('/teste', function (req, res) {
-      res.render('teste.ejs'); // Página de erro para rota não encontrada
-});
+      res.render('notFound.ejs'); // Página de erro para rota não encontrada
+    });
   },
 };

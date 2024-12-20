@@ -17,23 +17,10 @@
 
 <body>
 
-<!-- Cabeçalho com navegação -->
-<div class="header">
-    <div class="image"></div>
-    <nav>
-        <a class="btn" href="/">Home</a>
-        <a class="btn" href="sobreNos">Sobre nós</a>
-        <a class="btn" href="cardapio">Cardápio</a>
-        <a class="btn" href="galeria">Galeria</a>
-        <a class="btn" href="ifsp">IFSP</a>
-        <a class="btn" href="fazerPedido">Faça seu pedido</a>
-        <a class="btn" href="faleConosco">Fale Conosco</a>
-    </nav>
-</div>
+<%- include('menu-header') %>
 
 <h1>Cardápio</h1>
 
-<!-- Filtros para o cardápio -->
 <div>
     <label>Filtrar por categoria:</label>
     <select id="categoriaFiltro" onchange="aplicarFiltros()">
@@ -42,67 +29,220 @@
         <option value="Doces">Doces</option>
         <option value="Bebidas">Bebidas</option>
         <option value="Vegana">Vegana</option>
+        <!-- ...outras opções -->
     </select>
 
     <label>Ordenar por preço:</label>
-    <select id="precoFiltro" onchange="aplicarFiltros()">
-        <option value="crescente">Crescente</option>
-        <option value="decrescente">Decrescente</option>
-    </select>
+        <select id="precoFiltro" onchange="aplicarFiltros()">
+            <option value="crescente">Crescente</option>
+            <option value="decrescente">Decrescente</option>
+        </select>
+    </label>
 </div>
 
-<!-- Exibição dos itens do cardápio por categoria -->
-<% const categorias = ["Salgados", "Doces", "Bebidas", "Vegana"]; %>
-<% categorias.forEach(categoria => { %>
-    <div id="<%= categoria.toLowerCase() %>" class="categoria-item">
-        <h2><%= categoria %></h2>
-        <table id="table-<%= categoria.toLowerCase() %>">
-            <thead>
-                <tr class="cabecalho">
-                    <th>Categoria</th>
-                    <th>Nome</th>
-                    <th>Detalhes</th>
-                    <th>Preço</th>
-                    <th>Adicione ao pedido</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% menu.forEach(item => { %>
-                    <% if (item.categoria === categoria) { %>
-                        <tr class="item">
-                            <td><%= item.categoria %></td>
-                            <td><%= item.nome_item %></td>
-                            <td><%= item.detalhes %></td>
-                            <td>R$<%= item.preco %></td>
-                            <td>
-                                <button onclick="aumentar(<%= item.id %>, <%= item.preco %>, '<%= item.nome_item %>')">+</button>
-                                <span id="valor-<%= item.id %>" class="btn-span">0</span>
-                                <button onclick="diminuir(<%= item.id %>, <%= item.preco %>, '<%= item.nome_item %>')">-</button>
-                            </td>
-                        </tr>
-                    <% } %>
-                <% }) %>
-            </tbody>
-        </table>
-    </div>
-<% }) %>
-
-<!-- Total do pedido -->
-<div class="container">
-    <h4>Pedido</h4>
-    <p>Total: R$<span id="valor-total">0</span></p>
-    <div id="pedidos"></div>
+<div id="salgados" class="categoria-item">
+    <h2>Salgados</h2>
+    <table id="table-salgados">
     
-    <div class="content">
-        <nav class="comprovante">
-            <a class="btn" href="/">Fechar comanda</a>
-            <button class="btn" onclick="gerarComprovante()">Gerar comprovante</button>
-            <button class="btn" onclick="baixarComprovante()">Download comprovante</button>
-        </nav>
+        <thead>
+            <tr class="cabecalho">
+                <th>Categoria</th>
+                <th>Nome</th>
+                <th>Detalhes</th>
+                <th>Preço</th>
+                <th>Adicione ao pedido</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% menu.forEach(item => { %>
+                <%if (item.categoria == "Salgados"){ %>
+                
+                <tr class="item">
+                    <td data-categoria="<% item.categoria %>"><%= item.categoria %></td>
+                    <td data-nome="<%= item.nome_item %>"><%= item.nome_item %></td>
+                    <td data-detalhes="<% item.detalhes %>"><%= item.detalhes %></td>
+                    <td name=<%= item.preco %>><%= item.preco %></td>
+                    <td>
+                        <button id="aumentar" onclick="aumentar(<%=item.id%>, <%= item.preco %>, '<%= item.nome_item %>')">+</button>
+                        <span class="btn-span" id="valor-<%=item.id%>" value="0">0</span>
+                        <button id="diminuir" onclick="diminuir(<%=item.id%>, <%= item.preco %>, '<%= item.nome_item %>')">-</button>
+                    </td>
+
+                <% } %>
+            <% }) %>
+        </tbody>
+
+    </table>
+</div>
+<div id="doces" class="categoria-item">
+    <h2>Doces</h2>
+    <table id="table-doces">
+
+        <thead>
+            <tr class="cabecalho">
+                <th>Categoria</th>
+                <th>Nome</th>
+                <th>Detalhes</th>
+                <th>Preço</th>
+                <th>Adicione ao pedido</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% menu.forEach(item => { %>
+                <%if (item.categoria == "Doces"){ %>
+                
+                <tr class="item">
+                    <td data-categoria="<% item.categoria %>"><%= item.categoria %></td>
+                    <td data-nome="<%= item.nome_item %>"><%= item.nome_item %></td>
+                    <td data-detalhes="<% item.detalhes %>"><%= item.detalhes %></td>
+                    <td name=<%= item.preco %>><%= item.preco %></td>
+                    <td>
+                        <button id="aumentar" onclick="aumentar(<%=item.id%>, <%= item.preco %>, '<%= item.nome_item %>')">+</button>
+                        <span class="btn-span" id="valor-<%=item.id%>" value="0">0</span>
+                        <button id="diminuir" onclick="diminuir(<%=item.id%>, <%= item.preco %>, '<%= item.nome_item %>')">-</button>
+                    </td>
+                </tr>
+
+                <% } %>
+            <% }) %>
+        </tbody>
+
+    </table>
+</div>
+<div id="bebidas" class="categoria-item">
+    <h2>Bebidas</h2>
+    <table id="table-bebidas">
+
+        <thead>
+            <tr class="cabecalho">
+                <th>Categoria</th>
+                <th>Nome</th>
+                <th>Detalhes</th>
+                <th>Preço</th>
+                <th>Adicione ao pedido</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% menu.forEach(item => { %>
+                <%if (item.categoria == "Bebidas"){ %>
+                
+                <tr class="item">
+                    <td data-categoria="<% item.categoria %>"><%= item.categoria %></td>
+                    <td data-nome="<%= item.nome_item %>"><%= item.nome_item %></td>
+                    <td data-detalhes="<% item.detalhes %>"><%= item.detalhes %></td>
+                    <td name=<%= item.preco %>><%= item.preco %></td>
+                    <td>
+                        <button id="aumentar" onclick="aumentar(<%=item.id%>, <%= item.preco %>, '<%= item.nome_item %>')">+</button>
+                        <span class="btn-span" id="valor-<%=item.id%>" value="0">0</span>
+                        <button id="diminuir" onclick="diminuir(<%=item.id%>, <%= item.preco %>, '<%= item.nome_item %>')">-</button>
+                    </td>
+                </tr>
+
+                <% } %>
+            <% }) %>
+        </tbody>
+
+    </table>
+</div>
+<div id="vegana" class="categoria-item">
+    <h2>Veganas</h2>
+    <table id="table-veganos">
+    
+        <thead>
+            <tr class="cabecalho">
+                <th>Categoria</th>
+                <th>Nome</th>
+                <th>Detalhes</th>
+                <th>Preço</th>
+                <th>Adicione ao pedido</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% menu.forEach(item => { %>
+                <%if (item.categoria == "Vegana"){ %>
+                
+                <tr class="item">
+                    <td data-categoria="<% item.categoria %>"><%= item.categoria %></td>
+                    <td data-nome="<%= item.nome_item %>"><%= item.nome_item %></td>
+                    <td data-detalhes="<% item.detalhes %>"><%= item.detalhes %></td>
+                    <td name=<%= item.preco %>><%= item.preco %></td>
+                    <td>
+                        <button id="aumentar" onclick="aumentar(<%=item.id%>, <%= item.preco %>, '<%= item.nome_item %>')">+</button>
+                        <span class="btn-span" id="valor-<%=item.id%>" value="0">0</span>
+                        <button id="diminuir" onclick="diminuir(<%=item.id%>, <%= item.preco %>, '<%= item.nome_item %>')">-</button>
+                    </td>
+                </tr>
+
+                <% } %>
+            <% }) %>
+        </tbody>
+
+    </table>
+</div>
+
+<br><br>
+<div class="container">
+    <p>Total: R$<span id="valor-total">0</span></p>
+        
+    <div style="display: none">
+        <div class="container" id = "pedidos">
+            
+        </div>
+    </div>
+
+    <% if (user) { %> 
+        <div class="content">
+            <nav class="comprovante">
+                <button class="btn open-modal" onclick="document.querySelector('.modal').classList.add('show')">Fechar comanda</button>
+                
+                <!-- Botão que expande/colapsa o conteúdo -->
+                <input type="checkbox" id="toggle" class="collapse-checkbox">
+                <label class="btn collapse-button" for="toggle">Gerar Comprovante</label>
+        
+                <!-- Botão de download que permanece visível -->
+                <button class="btn" onclick="gerarPDF()">Download comprovante</button>
+        
+                <!-- Conteúdo colapsável -->
+                <div class="collapse-content" id="comprovante-pdf">
+                    <div class="card-comprovante">
+                        <div class="content">
+                            <h3>Doceria Doce Viver</h3>
+                            <h4>Obrigado pelo seu pedido!</h4>
+                            <p class="tracado-baixo">Resumo do pedido</p>
+                            <div class="container">
+                                <div class="container" id="pedidos-comanda"></div>
+                                
+                                <h3 class="tracado-cima">Total: R$<span id="valor-total-comanda">0</span></h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+              
+
+    <% } else { %>
+        <div class="content">
+            <nav class="comprovante">
+                <h4>Faça login para fechar o seu pedido!</h4>
+                <a class="btn" href="/login">Entrar</a>
+            </nav>
+        </div>
+    <% } %>
+</div>
+<br><br>
+
+<div class="modal">
+    <div class="modal-content">
+      <button class="close" onclick="document.querySelector('.modal').classList.remove('show')">&times;</button>
+      <h2>Comanda fechada com sucesso!</h2>
+      <p>Clique em gerar comprovante ou fazer download para visualizar os itens do seu pedido!</p>
+      <button class='btn' onclick="document.querySelector('.modal').classList.remove('show')">Fechar</button>
     </div>
 </div>
 
-<!-- Rodapé -->
+
+
 <footer>
     <div class="footer-basic">
         <div class="social">
@@ -122,86 +262,112 @@
     </div>
 </footer>
 
-<!-- Scripts de funcionalidade -->
 <script>
-    // Função para aplicar filtros no cardápio
+    const items = Array.from(document.querySelectorAll('.item'));
+    const categoria_items = Array.from(document.querySelectorAll('.categoria-item'));
+    // const puppeteer = require('puppeteer');
+
     function aplicarFiltros() {
         const categoriaFiltro = document.getElementById('categoriaFiltro').value;
         const precoFiltro = document.getElementById('precoFiltro').value;
 
         // Filtra as categorias
-        document.querySelectorAll('.categoria-item').forEach(item => {
+        categoria_items.forEach(item => {
             const categoria = item.querySelector('h2').innerText;
-            item.style.display = (categoriaFiltro === 'todos' || categoria.includes(categoriaFiltro)) ? 'block' : 'none';
+            console.log(categoria);
+            if (categoriaFiltro === 'todos' || categoria.includes(categoriaFiltro)) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
         });
 
-        // Ordena os itens da tabela
+        // Seleciona a tabela correta com base na categoria
         const tabelaCategoria = document.querySelector(`#table-${categoriaFiltro.toLowerCase()}`);
-        if (!tabelaCategoria) return; // Não existe tabela para a categoria
+        if (!tabelaCategoria) return; // Caso não haja tabela correspondente
 
-        const linhas = Array.from(tabelaCategoria.querySelectorAll('tr.item'));
+        const linhas = Array.from(tabelaCategoria.querySelectorAll('.item'));
+
+        // Ordena as linhas pelo preço conforme o filtro selecionado
         linhas.sort((a, b) => {
-            const precoA = parseFloat(a.querySelector('td:nth-child(4)').innerText.replace('R$', '').trim());
-            const precoB = parseFloat(b.querySelector('td:nth-child(4)').innerText.replace('R$', '').trim());
+            const precoA = parseFloat(a.querySelector('td[name]').getAttribute('name'));
+            const precoB = parseFloat(b.querySelector('td[name]').getAttribute('name'));
+
             return precoFiltro === 'crescente' ? precoA - precoB : precoB - precoA;
         });
 
+        // Remove as linhas da tabela e insere na nova ordem
         const tbody = tabelaCategoria.querySelector('tbody');
-        tbody.innerHTML = '';
+        tbody.innerHTML = ''; // Limpa o tbody atual
         linhas.forEach(linha => tbody.appendChild(linha));
     }
 
-    // Função para aumentar a quantidade de um item
+    // Função para aumentar o valor
     function aumentar(id, preco, nome) {
         const valorElemento = document.getElementById("valor-" + id);
-        const newValor = parseInt(valorElemento.innerText) + 1;
-        valorElemento.innerText = newValor;
+        newValor = parseInt(valorElemento.getAttribute("value")) + 1;
+        valorElemento.textContent = newValor;
+        valorElemento.setAttribute("value", newValor);
         calculaTotal(preco);
         adicionarNomeItem(nome, preco);
     }
 
-    // Função para diminuir a quantidade de um item
+    // Função para diminuir o valor
     function diminuir(id, preco, nome) {
         const valorElemento = document.getElementById("valor-" + id);
-        let newValor = parseInt(valorElemento.innerText) - 1;
-        if (newValor < 0) newValor = 0;
-        valorElemento.innerText = newValor;
+        newValor = parseInt(valorElemento.getAttribute("value")) - 1;
+        if(newValor < 0){
+            newValor = 0;
+        }
+        valorElemento.textContent = newValor;
+        valorElemento.setAttribute("value", newValor);
         calculaTotal(-preco);
         removeNomeItem(nome, preco);
     }
 
-    // Função para calcular o total do pedido
+    // Função para diminuir o valor
     function calculaTotal(valorPedido) {
         const valorElemento = document.getElementById("valor-total");
-        let newValor = parseFloat(valorElemento.innerText) + valorPedido;
-        if (newValor < 0) newValor = 0;
-        valorElemento.innerText = newValor;
-    }
-
-    // Função para adicionar o nome do item ao pedido
-    function adicionarNomeItem(nome, preco) {
-        const pedidoDiv = document.getElementById("pedidos");
-        pedidoDiv.innerHTML += `<p>${nome} (R$${preco})</p>`;
-    }
-
-    // Função para remover o nome do item do pedido
-    function removeNomeItem(nome, preco) {
-        const pedidoDiv = document.getElementById("pedidos");
-        const itemTexto = `<p>${nome} (R$${preco})</p>`;
-        if (pedidoDiv.innerHTML.includes(itemTexto)) {
-            pedidoDiv.innerHTML = pedidoDiv.innerHTML.replace(itemTexto, '');
+        const valorElementoComanda = document.getElementById("valor-total-comanda");
+        newValor = parseFloat(valorElemento.textContent) + valorPedido;
+        if(newValor < 0){
+            newValor = 0;
         }
+        valorElemento.textContent = newValor;
+        valorElementoComanda.textContent = newValor;
     }
 
-    // Função para gerar o comprovante
-    function gerarComprovante() {
-        alert("Comprovante gerado!");
+    function adicionarNomeItem(nome, preco){
+        const valorElemento = document.getElementById("pedidos");
+        const valorElementoComanda = document.getElementById("pedidos-comanda");
+        valorElemento.innerHTML = valorElemento.innerHTML + "<p>" + nome + " (R$" + preco + ") </p>";
+        valorElementoComanda.innerHTML = valorElementoComanda.innerHTML + "<p>" + nome + " (R$" + preco + ") </p>";
     }
 
-    // Função para baixar o comprovante
-    function baixarComprovante() {
-        alert("Baixando comprovante...");
+    function removeNomeItem(nome, preco){
+        const valorElemento = document.getElementById("pedidos");
+        const valorElementoComanda = document.getElementById("pedidos-comanda");
+        const textRemove = "<p>" + nome + " (R$" + preco + ") </p>";
+        
+        if(valorElemento.innerHTML.includes(textRemove)){
+            valorElemento.innerHTML = valorElemento.innerHTML.replace(textRemove, '');
+        }
+        
+        if(valorElementoComanda.innerHTML.includes(textRemove)){
+            valorElementoComanda.innerHTML = valorElementoComanda.innerHTML.replace(textRemove, '');
+        }
+
     }
+
+    function gerarPDF() {
+        let conteudo = "<style>.card-comprovante {display: block;width: 100%;background-color: #fff;border-radius: 6px;overflow: hidden;box-shadow: 0px 4px 6px rgba(0, 0, 0, .12);text-align: left;} .card-comprovante h4 {color: #F39562;} .tracado-baixo {border-bottom: 2px dotted #F39562;color: #F39562;padding-bottom: 15px;} .tracado-cima {border-top: 2px dotted #F39562;padding-top: 15px;} .image-comanda {height: 200px;overflow: hidden;} .image-comanda img {width: 100%;height: 100%;object-fit: cover;} .collapse-checkbox {display: none;} .collapse-button {display: inline-block;transition: background-color 0.3s;} .btn {display: inline-block;transition: background-color 0.3s;} .collapse-content {max-height: 0;overflow: hidden;transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;margin-top: 10px;} .collapse-checkbox:checked + .collapse-button + .btn + .collapse-content {max-height: 1000px;padding: 10px;} .card-comprovante {display: block;border: 1px solid #ddd;border-radius: 5px;background-color: #f8f9fa;padding: 10px;} .content h3, .content h4, .content p {margin: 10px 0;}</style>";
+        conteudo = conteudo + document.getElementById("comprovante-pdf").innerHTML;
+        const novaJanela = window.open('', '_blank', 'width=800,height=600');
+        novaJanela.document.write(conteudo);
+        novaJanela.document.close();
+        novaJanela.print();
+    }
+
 </script>
 
 </body>

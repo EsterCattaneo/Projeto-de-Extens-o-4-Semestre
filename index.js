@@ -1,12 +1,23 @@
 const app = require('./config/server');
 const routes = require('./app/routes/routes');
-routes.home(app); // página sem bd
-routes.cardapio(app); // página puxa e exibe bd
-routes.sobreNos(app); // página sem bd
-routes.galeria(app); // página puxa, exibe e escreve no bd
-routes.ifsp(app); // página sem bd
-routes.fazerPedido(app); // página puxa e exibe bd
-routes.faleConosco(app);
-routes.routeNotFound(app);
-routes.teste(app);
 
+// Paginas de exibicao de conteudo
+routes.home(app);
+routes.cardapio(app);
+routes.sobreNos(app);
+routes.ifsp(app);
+
+//Paginas com interacao do usuario (forms)
+routes.galeria(app);
+routes.fazerPedido(app);
+routes.faleConosco(app);
+routes.editarCardapio(app);
+
+//Paginas de autenticacao
+routes.login(app);
+routes.admin(app);
+routes.cadastro(app);
+routes.sair(app);
+
+//Página não encontrada
+routes.routeNotFound(app);

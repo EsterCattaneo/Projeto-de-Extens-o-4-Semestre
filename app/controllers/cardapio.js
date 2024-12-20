@@ -3,7 +3,6 @@ const { consultarCardapio } = require('../models/cardapio');
 
 module.exports.cardapio = (app, req, res) => {
   //aqui vamos fazer a chamada para o model do banco de dados.
-  console.log('[Controller cardapio]');
   dbConn = dbConnection();
 
   consultarCardapio(dbConn, (error, cardapio) =>{
@@ -12,4 +11,3 @@ module.exports.cardapio = (app, req, res) => {
     res.render('cardapio.ejs', {menu: cardapio});
   })
 };
-

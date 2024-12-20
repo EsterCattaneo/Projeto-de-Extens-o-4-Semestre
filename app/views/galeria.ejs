@@ -13,18 +13,7 @@
 </head>
 
 <body>
-    <div class="header">
-        <div class="image"></div>
-        <nav>
-            <a class="btn" href="/">Home</a>
-            <a class="btn" href="sobreNos">Sobre nós</a>
-            <a class="btn" href="cardapio">Cardápio</a>
-            <a class="btn" href="galeria">Galeria</a>
-            <a class="btn" href="ifsp">IFSP</a>
-            <a class="btn" href="fazerPedido">Faça seu pedido</a>
-            <a class="btn" href="faleConosco">Fale Conosco</a>
-        </nav>
-    </div>
+    <%- include('menu-header') %>
 
     <div class="card-container">
         <!-- Card 1 -->
@@ -42,9 +31,9 @@
                 
 
                 <div class="social">
-                    <form action="/galeria/incremento?cardapio_id=1" method="POST"> 
+                    <form action="/galeria/incremento?cardapio_id=1" method="POST"> <!-- MUDAR IDS DO POST PARA FICAR AUTOMATICO COM O BANCO -->
                         <% for(let i = 0; i < likes.length; i++) { %>
-                            <% if (likes[i].cardapio_id == 1) { %> <!-- to consultando o id desejado -->
+                            <% if (likes[i].cardapio_id == 1) { %> <!-- Verifique o ID desejado -->
                                 <input type="hidden" name="curtidas" value="<%= likes[i].curtidas %>">
                                 <div class="curtir"> Curtir (<%= likes[i].curtidas %>)</div>
                                 <button type="submit">Curtir</button>
@@ -52,7 +41,7 @@
                         <% } %>
                     </form>
                     
-                    <form action="/galeria/adicionar?cliente_id=7&cardapio_id=1" method="POST"> <!-- -->
+                    <form action="/galeria/adicionar?cliente_id=7&cardapio_id=1" method="POST"> <!-- MUDAR IDS DO POST PARA FICAR AUTOMATICO COM O BANCO -->
                         <div class="comentario">
                             <p><b>Adicione seu comentário:</b> <input type="text" placeholder="Comentário" name="comentario" required></input></p>
 
@@ -65,7 +54,7 @@
                                 <% } %>
                             <% } %>
 
-                            <button class="btn" type="submit">Enviar</button>
+                            <button type="submit">Enviar</button>
                         </div>
                     </form>
                 </div>
@@ -106,7 +95,7 @@
                                     </p>
                                 <% } %>
                             <% } %>
-                            <button class="btn" type="submit">Enviar</button>
+                            <button type="submit">Enviar</button>
                         </div>
                     </form>
                 </div>
@@ -148,7 +137,7 @@
                                     </p>
                                 <% } %>
                             <% } %>
-                            <button class="btn" type="submit">Enviar</button>
+                            <button type="submit">Enviar</button>
                         </div>
                     </form>
                 </div>
@@ -190,7 +179,7 @@
                                     </p>
                                 <% } %>
                             <% } %>
-                            <button class="btn" type="submit">Enviar</button>
+                            <button type="submit">Enviar</button>
                         </div>
                     </form>
                 </div>
@@ -232,7 +221,7 @@
                                     </p>
                                 <% } %>
                             <% } %>
-                            <button class="btn" type="submit">Enviar</button>
+                            <button type="submit">Enviar</button>
                         </div>
                     </form>
                 </div>
@@ -274,7 +263,7 @@
                                     </p>
                                 <% } %>
                             <% } %>
-                            <button class="btn" type="submit">Enviar</button>
+                            <button type="submit">Enviar</button>
                         </div>
                     </form>
                 </div>
@@ -316,7 +305,7 @@
                                     </p>
                                 <% } %>
                             <% } %>
-                            <button class="btn" type="submit">Enviar</button>
+                            <button type="submit">Enviar</button>
                         </div>
                     </form>
                 </div>
@@ -358,7 +347,7 @@
                                     </p>
                                 <% } %>
                             <% } %>
-                            <button class="btn" type="submit">Enviar</button>
+                            <button type="submit">Enviar</button>
                         </div>
                     </form>
                 </div>

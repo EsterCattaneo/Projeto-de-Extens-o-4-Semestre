@@ -14,18 +14,7 @@
 </head>
 
 <body> 
-    <div class="header">
-        <div class="image"></div>
-        <nav>
-            <a class="btn" href="/">Home</a>
-            <a class="btn" href="sobreNos">Sobre nós</a>
-            <a class="btn" href="cardapio">Cardápio</a>
-            <a class="btn" href="galeria">Galeria</a>
-            <a class="btn" href="ifsp">IFSP</a>
-            <a class="btn" href="fazerPedido">Faça seu pedido</a>
-            <a class="btn" href="faleConosco">Fale Conosco</a>
-        </nav>
-    </div>
+    <%- include('menu-header') %>
 
     <div class="container">
         <div class="carousel">
@@ -86,6 +75,15 @@
             <p class="copyright">Doce Viver © 2024</p>
         </div>
     </footer>
-
+    
+    <script>
+        // Função para exibir alert se a mensagem for passada na URL
+        window.onload = () => {
+          const urlParams = new URLSearchParams(window.location.search);
+          if (urlParams.get('message') === 'logout_sucesso') {
+            alert('Logout realizado com sucesso!');
+          }
+        };
+      </script>
 </body>
 </html>

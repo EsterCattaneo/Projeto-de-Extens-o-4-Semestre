@@ -50,3 +50,40 @@ tr:hover {
   margin: 0px 10px;
   background: white;
 }
+
+.form-group {
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.form-group label {
+  display: block;
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 20%;
+  align-items: center;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.form-group.item input{
+  width: 100%;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #F39562;
+  outline: none;
+}
+
+.form-group i {
+  margin-right: 10px;
+}

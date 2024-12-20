@@ -3,4 +3,3 @@ module.exports.teste = (app, req, res) => {
     console.log('[Controller teste]');
     res.render('teste.ejs', { });
   };
-  
